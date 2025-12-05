@@ -1,10 +1,7 @@
 #include "stm32f10x.h"                  // Device header
 
-/**
-  * 函    数：PWM初始化
-  * 参    数：无
-  * 返 回 值：无
-  */
+
+//PWM初始化
 void PWM_Init1(void)
 {
 	/*开启时钟*/
@@ -14,7 +11,7 @@ void PWM_Init1(void)
 	/*GPIO初始化*/
 	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;						//使用PA2作为PWM检测引脚
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_2;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);							//将PA2引脚初始化为复用推挽输出	
 																	//受外设控制的引脚，均需要配置为复用模式
@@ -55,7 +52,7 @@ void PWM_Init2(void)
 	/*GPIO初始化*/
 	GPIO_InitTypeDef GPIO_InitStructure;
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;						//使用PA3作为PWM检测口
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);							//将PA3引脚初始化为复用推挽输出	
 																	//受外设控制的引脚，均需要配置为复用模式
@@ -86,13 +83,9 @@ void PWM_Init2(void)
 	/*TIM使能*/
 	TIM_Cmd(TIM2, ENABLE);			//使能TIM2，定时器开始运行
 }
-/**
-  * 函    数：PWM设置CCR
-  * 参    数：Compare 要写入的CCR的值，范围：0~100
-  * 返 回 值：无
-  * 注意事项：CCR和ARR共同决定占空比，此函数仅设置CCR的值，并不直接是占空比
-  *           占空比Duty = CCR / (ARR + 1)
-  */
+/*
+  PWM设置CCR，要写入的CCR的值，范围：0~100，占空比= CCR / (ARR + 1)
+*/
 void PWM_SetCompare3(uint16_t Compare)
 {
 	TIM_SetCompare3(TIM2, Compare);		//设置CCR3的值
